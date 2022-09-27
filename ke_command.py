@@ -1,4 +1,4 @@
-from command_server import CommandServer, Ticket
+import command_server as cs
 
 
 class KeCommand:
@@ -14,18 +14,17 @@ class KeCommand:
     def args(self, args: dict):
         self.arguments = args
 
-    def go(self) -> Ticket:
+    def go(self) -> cs.Ticket:
         if self.arguments:
-            return CommandServer.instance.exec_async(self.name, **self.arguments)
+            return cs.start(self.name, **self.arguments)
         else:
-            return CommandServer.instance.exec_async(self.name)
+            return cs.start(self.name)
 
 
 if __name__ == '__main__':
     COMMAND_CONNECTION_URL = "ws://192.168.71.3:20004/TX2_90/websocket-command"
-    srv = CommandServer().instance
     try:
-        srv.connect(COMMAND_CONNECTION_URL)
+        cs.connect_to_socket(COMMAND_CONNECTION_URL)
 
         KeCommand('set_active_client').go().wait()
         KeCommand('reset_errors').go().wait()
@@ -52,4 +51,4 @@ if __name__ == '__main__':
 
         print('ENDE')
     finally:
-        srv.disconnect()
+        cs.disconnect_from_socket()

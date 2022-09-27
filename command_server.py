@@ -2,7 +2,7 @@ import json
 from threading import Thread, Lock, Condition
 import websocket
 from enum import Enum
-from _error import KebaError, HttpError
+from _error import KebaError, HttpError, SocketError
 
 
 class Ticket:
@@ -82,14 +82,48 @@ class Ticket:
             return False
 
 
+def connect_to_socket(url):
+    com_server = CommandServer.instance()
+    if com_server.is_connected():
+        raise SocketError('Already connected. Can not connect twice')
+    com_server.connect(url)
+
+
+def disconnect_from_socket():
+    com_server = CommandServer.instance()
+    if not com_server.is_connected():
+        raise SocketError('Already disconnected')
+    com_server.disconnect()
+
+
+def start(cmd: str, **kwargs) -> Ticket:
+    com_server = CommandServer.instance()
+    if not com_server.is_connected():
+        raise SocketError('No connection to server established')
+    com_server.start(str, **kwargs)
+
+
+def exec(self, cmd: str, **kwargs) -> str:
+    com_server = CommandServer.instance()
+    if not com_server.is_connected():
+        raise SocketError('No connection to server established')
+    com_server.exec(cmd, **kwargs)
+
+
 class CommandServer:
     '''
     Zentrale Stelle, um Keba RcWebApi Kommandos zu managed
     '''
-    instance = None
+    _instance = None
+
+    @staticmethod
+    def instance():
+        if vars._instance is None:
+            CommandServer()
+        return CommandServer._instance
 
     def __init__(self) -> None:
-        assert CommandServer.instance is None
+        assert CommandServer._instance is None
         self._ws = None
         self._receiver_thread = None
         self._receiver_thread_stop = False
@@ -97,7 +131,7 @@ class CommandServer:
         self._ticket_list = []
         self._lock = Lock()
         self._condition = Condition(self._lock)
-        CommandServer.instance = self
+        CommandServer._instance = self
 
     def connect(self, url):
         self._rec_id_counter = 0
@@ -117,7 +151,10 @@ class CommandServer:
         self._receiver_thread = None
         self._ws = None
 
-    def exec_async(self, cmd: str, **kwargs) -> Ticket:
+    def is_connected(self) -> bool:
+        return self._ws.connected
+
+    def start(self, cmd: str, **kwargs) -> Ticket:
         with self._lock:
             self._rec_id_counter += 1
             t = Ticket(self, self._rec_id_counter)
@@ -132,8 +169,8 @@ class CommandServer:
         self._ws.send(json.dumps(data))
         return t
 
-    def exec_sync(self, cmd: str, **kwargs) -> str:
-        t = self.exec_async(cmd, **kwargs)
+    def exec(self, cmd: str, **kwargs) -> str:
+        t = self.start(cmd, **kwargs)
         return t.wait()
 
     def _thread_fun(self):

@@ -105,7 +105,7 @@ class SubscribeServer:
             topic = json_msg['topic']
             with self._lock:
                 for func in self._subscription_dict[topic]:
-                    func(json_msg)
+                    func(message)
 
     def _error_handler(self, ws, error):
         raise SocketError(error)
