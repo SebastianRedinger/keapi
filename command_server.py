@@ -2,16 +2,7 @@ import json
 from threading import Thread, Lock, Condition
 import websocket
 from enum import Enum
-
-
-class KebaError(RuntimeError):
-    '''Beschreibt einen Fehler der auf der Steuerung aufgetreten ist'''
-    pass
-
-
-class HttpError(RuntimeError):
-    '''Beschreibt einen Fehler der durch eine Falsche Nutzung aufgetreten ist'''
-    pass
+from _error import KebaError, HttpError
 
 
 class Ticket:
@@ -157,10 +148,10 @@ class CommandServer:
 
 
 if __name__ == '__main__':
-    import globvars
+    COMMAND_CONNECTION_URL = "ws://192.168.71.3:20004/TX2_90/websocket-command"
     from cprint import cprint
     cmd = CommandServer()
-    cmd.connect(globvars.COMMAND_CONNECTION_URL)
+    cmd.connect(COMMAND_CONNECTION_URL)
     while True:
         try:
             print(eval(input('>>>')))

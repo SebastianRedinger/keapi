@@ -22,10 +22,10 @@ class KeCommand:
 
 
 if __name__ == '__main__':
-    import globvars
+    COMMAND_CONNECTION_URL = "ws://192.168.71.3:20004/TX2_90/websocket-command"
     srv = CommandServer().instance
     try:
-        srv.connect(globvars.COMMAND_CONNECTION_URL)
+        srv.connect(COMMAND_CONNECTION_URL)
 
         KeCommand('set_active_client').go().wait()
         KeCommand('reset_errors').go().wait()
