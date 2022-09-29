@@ -10,7 +10,7 @@ def connect_subscriber(url: str):
     be used to interact with the socket.
 
     :param url: Full URL to socket
-    (e.g. ws://IP:PORT/Robot/websocket-subscribe)
+        (e.g. ws://IP:PORT/Robot/websocket-subscribe)
     :type url: str
     :return: SubscribeServer object
     :rtype: SubscribeServer
@@ -26,7 +26,7 @@ class SubscribeServer:
     unsubscribe to topics predefined by KEBA.
 
     :raises SocketError: When there is a problem while
-    receiving the answer from the socket
+        receiving the answer from the socket
     """
     def __init__(self) -> None:
         self._ws = None
@@ -69,11 +69,11 @@ class SubscribeServer:
         :param topic: RcWebApi Topic Name
         :type topic: str
         :param func: Function that will be called when topic returns
-        an answer.
+            an answer.
         :type func: function
         :param cycle_time: Time in seconds how often a topic should
-        return an answer, defaults to 0.0. If left to 0.0 it is assumed
-        that an event based topic is subscribed
+            return an answer, defaults to 0.0. If left to 0.0 it is assumed
+            that an event based topic is subscribed
         :type cycle_time: float, optional
         """
         assert func is not None
@@ -100,7 +100,7 @@ class SubscribeServer:
         :param topic: RcWebApi Topic Name
         :type topic: str
         :param func: Function that should be unsubscribed,
-        defaults to None
+            defaults to None
         :type func: function, optional
         """
         def _unsub_req(self, topic):

@@ -15,7 +15,7 @@ class Ticket:
 
     :raises TimeoutError: When wait timeout is reached
     :raises HttpError: When the request has an error on the
-    users side (e.g. wrong usage of command)
+        users side (e.g. wrong usage of command)
     :raises KebaError: When the error is on the PLC
     """
 
@@ -40,10 +40,10 @@ class Ticket:
         the timeout is reached.
 
         :param timeout: Timeout in seconds. If left to `None`
-        it waits forever. Defaults to None
+            it waits forever. Defaults to None
         :type timeout: float, optional
         :return: Result of the sent command. can be none if
-        there is no result for the command
+            there is no result for the command
         :rtype: Any
         """
         def predicate(state) -> bool:
@@ -109,7 +109,7 @@ def connect_commands(url: str):
     be used to interact with the socket.
 
     :param url: Full URL to socket
-    (e.g. ws://IP:PORT/Robot/websocket-command)
+        (e.g. ws://IP:PORT/Robot/websocket-command)
     :type url: str
     :return: CommandServer object
     :rtype: CommandServer
@@ -125,7 +125,7 @@ class CommandServer:
     commands on the KEBA PLC
 
     :raises HttpError: When the connection to the socket
-    was unsuccessful.
+        was unsuccessful.
     """
     def __init__(self) -> None:
         self._ws = None
