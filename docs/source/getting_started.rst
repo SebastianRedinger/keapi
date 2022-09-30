@@ -12,8 +12,8 @@ This API currently provides functionality to connect to the *command* and
 .. code-block:: python
 
     import keapi as ka
-    cmdserver = ka.connect_commands(COMMAND_URL)
-    subserver = ka.connect_subscriber(SUBSCRIBE_URL)
+    cmdserver = ka.connect_commands('ws://IP:PORT/ROBOT/websocket-command')
+    subserver = ka.connect_subscriber('ws://IP:PORT/ROBOT/websocket-subscribe')
 
 
 Commands
