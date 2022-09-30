@@ -3,20 +3,35 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to KeAPI's documentation!
-=================================
+KeAPI Documentation
+===================
+
+KeApi is an easy-to-use Python interface to commuicate with a KEBA PLC over
+WebSockets. This API can only be used in combination with
+**Robot Control WebAPI** installed on your PLC.
+
+The goal of this API is to control a robot from a 3rd party application.
+
+This interface provides functionality to:
+ - Start and execute commands on the PLC
+ - Set and receive variables on the PLC
+ - Subscribe to cyclic and event based topics
+
+Software Unit Requirements
+""""""""""""""""""""""""""
+| **RobotControl WebAPI 0.2.1-beta.1**
+| **RobotControl API 0.2.1-beta.6**
+| **Communication Utils Robotics 1.5.0** (Optional)
+
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Introduction:
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Comments Embedded in Code:
-
-   command_server
-   subscribe_server
-   ke_var
+   installation
+   getting_started
+   api_reference
+   class_reference
 
 
 
