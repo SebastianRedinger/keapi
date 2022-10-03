@@ -47,3 +47,12 @@ SubscribeServer
     SubscribeServer.is_connected
     SubscribeServer.subscribe
     SubscribeServer.unsubscribe
+
+Compatibility Layer
+===================
+
+.. currentmodule:: keapi.compat
+.. autosummary::
+    connect_tc_var
+    TcVar.set_var
+    TcVar.get_var
