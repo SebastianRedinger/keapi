@@ -17,3 +17,33 @@ it or monitor the state of it.
 - Start and execute commands on the PLC
 - Set and receive variables on the PLC
 - Subscribe to cyclic and event based topics
+
+## Getting Started
+### Installation
+To install this package you can either use `python3 setup.py install` or `pip3 install keapi`
+
+### Usage
+To get startet you first need to connect to the applicalbe web sockets.
+
+```
+import keapi as ka
+cmdserver = ka.connect_commands('ws://IP:PORT/ROBOT/websocket-command')
+subserver = ka.connect_subscriber('ws://IP:PORT/ROBOT/websocket-subscribe')
+```
+
+Once connected you are all set to send commands or subscribe to events.
+
+#### Example
+```
+cmdserver.exec('set_active_client')
+
+pos = {
+    'joints': {
+        'main_joints': [0, 0, 120, 0, 0, 0]
+    }
+}
+ticket = cmdserver.start('path_ptp', position=pos)
+ticket.wait()
+```
+
+The full documentation can be found at https://HIERBITTELINKEINFUEGEN.com
