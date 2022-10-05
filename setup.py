@@ -7,7 +7,7 @@ VERSION = "1.0.0"
 install_requires = ['websocket-client==1.4.1']
 
 setup(
-    name="kepai",
+    name="keapi",
     version=VERSION,
     description="A API to communicate with a KEBA PLC via WebSockets",
     author="Sebastian Redinger",
