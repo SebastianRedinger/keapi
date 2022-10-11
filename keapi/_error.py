@@ -16,3 +16,10 @@ class SocketError(RuntimeError):
     ToDo
     '''
     pass
+
+
+class TcError(RuntimeError):
+    '''
+    ToDo
+    '''
+    pass

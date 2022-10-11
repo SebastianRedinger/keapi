@@ -83,7 +83,7 @@ class TcVar:
 
 if __name__ == '__main__':
     tc = connect_tc_var('192.168.71.3', 'Administrator', 'tobechanged')
-    tc.set_var('_base._system.IEC.grJoystickX', 30)
-    print(tc.get_var('_base._system.IEC.grJoystickX'))
-    tc.set_var('_base._system.IEC.grJoystickX', 50)
-    print(tc.get_var('_base._system.IEC.grJoystickX'))
+    #tc.set_var('_base._system.IEC.grJoystickX', 30)
+    #print(tc.get_var('_base._system.IEC.grJoystickX'))
+    #tc.set_var('_base._system.IEC.grJoystickX', 50)
+    print(tc.get_var('_base._system.TX2_90.RobotData.cartSetPos.x'))
