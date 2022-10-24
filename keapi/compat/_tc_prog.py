@@ -73,6 +73,30 @@ class TcProg:
         self._program_name = None
         self._prog_active = False
 
+    def load_project(self, project_name: str) -> None:
+        self._get_control_authority()
+        self._project_name = project_name
+        url = f'http://{self._host}/api/v3/teach-control/projects/{self._robot}/{self._project_name}.tt'
+        body = json.dumps({'command': 'load'})
+        res = requests.post(url, headers=self._http_headers,
+                            data=body, cookies=self._cookie)
+        if res.status_code != 200:
+            raise HttpError(res.text)
+        self._release_control_authority()
+
+    def unload_project(self) -> None:
+        if not self._project_name:
+            raise TcError('No Project loaded')
+        self._get_control_authority()
+        url = f'http://{self._host}/api/v3/teach-control/projects/{self._robot}/{self._project_name}.tt'
+        body = json.dumps({'command': 'unload'})
+        res = requests.post(url, headers=self._http_headers,
+                            data=body, cookies=self._cookie)
+        if res.status_code != 200:
+            raise HttpError(res.text)
+        self._project_name = None
+        self._release_control_authority()
+
     def is_prog_running(self) -> bool:
         if not self._prog_active:
             raise TcError('There is no program active.')
@@ -113,4 +137,5 @@ class TcProg:
 
 if __name__ == '__main__':
     tc = connect_tc_prog('192.168.71.3', 'Administrator', 'tobechanged', 'TX2_90')
+    tc.load_project('Bondtec')
     tc.exec('Bondtec', 'Home')
