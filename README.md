@@ -1,4 +1,7 @@
 # KeApi
+[![Documentation Status](https://readthedocs.org/projects/keapi/badge/?version=latest)](https://keapi.readthedocs.io/en/latest/?badge=latest)
+
+
 KeApi is a Python package for communicating and
 sending commands to your KEBA PLC via Web Sockets.
 
@@ -46,4 +49,4 @@ ticket = cmdserver.start('path_ptp', position=pos)
 ticket.wait()
 ```
 
-The full documentation can be found at https://HIERBITTELINKEINFUEGEN.com
+The full documentation can be found at https://keapi.readthedocs.io
