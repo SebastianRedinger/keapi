@@ -133,9 +133,3 @@ class TcProg:
         res = requests.delete(url, cookies=self._cookie)
         if res.status_code != 200:
             raise HttpError(res.text)
-
-
-if __name__ == '__main__':
-    tc = connect_tc_prog('192.168.71.3', 'Administrator', 'tobechanged', 'TX2_90')
-    tc.load_project('Bondtec')
-    tc.exec('Bondtec', 'Home')
