@@ -8,7 +8,7 @@ this_directory = Path(__file__).parent
 long_description = (this_directory / "README.md").read_text()
 
 setup(
-    name="keapi",
+    name="keapi-robotics",
     version=VERSION,
     description="A API to communicate with a KEBA PLC via WebSockets",
     long_description=long_description,
