@@ -4,7 +4,7 @@ from ._ke_var import *
 from ._error import *
 from .compat import *
 
-__version__ = '1.0.0'
+__version__ = '1.0.0.beta1'
 
 __all__ = [
     "Ticket",

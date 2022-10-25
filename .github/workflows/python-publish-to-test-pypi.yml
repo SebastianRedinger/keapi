@@ -16,19 +16,14 @@ permissions:
 jobs:
   deploy:
 
-    runs-on: ${{ matrix.os }}
-    
-    strategy:
-      matrix:
-        python-version: ['3.7', '3.8', '3.9', '3.10']
-        os: [ubuntu-latest]
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
-    - name: Set up Python ${{ matrix.python-version }} environment
+    - name: Set up Python 3.10 environment
       uses: actions/setup-python@v3
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: "3.10"
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
@@ -37,7 +32,7 @@ jobs:
     - name: Build package
       run: python -m build
     - name: Publish distribution 📦 to Test PyPI
-      uses: pypa/gh-action-pypi-publish@v1.5.1
+      uses: pypa/gh-action-pypi-publish@v1
       with:
         user: __token__
         password: ${{ secrets.TEST_PYPI_API_TOKEN }}
