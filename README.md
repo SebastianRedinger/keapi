@@ -1,7 +1,8 @@
 # KeApi
 [![Documentation Status](https://readthedocs.org/projects/keapi/badge/?version=latest)](https://keapi.readthedocs.io/en/latest/?badge=latest)
-[![Publish 📦 to PyPI](https://github.com/SebastianRedinger/keapi/actions/workflows/python-publish-to-pypi.yml/badge.svg?branch=1.0)](https://github.com/SebastianRedinger/keapi/actions/workflows/python-publish-to-pypi.yml)
-[![Publish 📦 to TestPyPI](https://github.com/SebastianRedinger/keapi/actions/workflows/python-publish-to-test-pypi.yml/badge.svg?branch=1.0)](https://github.com/SebastianRedinger/keapi/actions/workflows/python-publish-to-test-pypi.yml)
+[![Publish 📦 to PyPI](https://github.com/SebastianRedinger/keapi/actions/workflows/python-publish-to-pypi.yml/badge.svg)](https://github.com/SebastianRedinger/keapi/actions/workflows/python-publish-to-pypi.yml)
+[![PyPI version](https://img.shields.io/pypi/v/keapi-robotics)](https://pypi.org/project/keapi-robotics/)
+
 
 
 KeApi is a Python package for communicating and
