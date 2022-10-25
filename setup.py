@@ -12,7 +12,7 @@ setup(
     version=VERSION,
     description="A API to communicate with a KEBA PLC via WebSockets",
     long_description=long_description,
-    long_description_content_type='text/markdown'
+    long_description_content_type='text/markdown',
     author="Sebastian Redinger",
     author_email="sebastian.redinger@fsbondtec.at",
     license="MIT",
