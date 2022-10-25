@@ -6,9 +6,11 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Publish 📦 to TestPyPI
+name: Publish 📦 to PyPI
 
-on: push
+on:
+  release:
+    types: [published]
 
 permissions:
   contents: read
@@ -31,9 +33,8 @@ jobs:
         pip install websocket-client==1.4.1
     - name: Build package
       run: python -m build
-    - name: Publish distribution 📦 to Test PyPI
+    - name: Publish distribution 📦 to PyPI
       uses: pypa/gh-action-pypi-publish@v1.5.1
       with:
         user: __token__
-        password: ${{ secrets.TEST_PYPI_API_TOKEN }}
-        repository_url: https://test.pypi.org/legacy/
+        password: ${{ secrets.PYPI_API_TOKEN }}
