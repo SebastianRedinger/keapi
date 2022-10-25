@@ -16,12 +16,15 @@ it or monitor the state of it.
 ### Requirements
 **RobotControl WebAPI 0.2.1-beta.1**  
 **RobotControl API 0.2.1-beta.6**  
-**Communication Utils Robotics 1.5.0** (Optional)  
+**Communication Utils Robotics 1.5.0** (Optional - For compatibility layer)
 
 ## Key Features
 - Start and execute commands on the PLC
 - Set and receive variables on the PLC
 - Subscribe to cyclic and event based topics
+
+## Documentation
+The full documentation can be found at https://keapi.readthedocs.io
 
 ## Getting Started
 ### Installation
@@ -51,4 +54,20 @@ ticket = cmdserver.start('path_ptp', position=pos)
 ticket.wait()
 ```
 
-The full documentation can be found at https://keapi.readthedocs.io
+### Compatibility Layer
+While **RobotControl WebAPI** is in beta some functions such as
+`set_var` won't work. To counteract this, the Compatibility Layer
+implements functions to get and set variables and to execute Teach Control
+programs via TcWebApi.
+
+#### Example
+```
+import keapi as ka
+tc_var = ka.compat.connect_tc_var(192.168.1.1, Admin, pass)
+
+# Get Var
+pos_x = tc_var.get_var('TX2_90.RobotData.cartSetPos.x')
+
+# Set Var
+tc_var.set_var('IO.do_1', 1)
+```
