@@ -1,15 +1,18 @@
-import sys
-import pkg_resources
 from setuptools import setup, find_packages
+from pathlib import Path
 
 VERSION = "1.0.0"
 
 install_requires = ['websocket-client==1.4.1']
+this_directory = Path(__file__).parent
+long_description = (this_directory / "README.md").read_text()
 
 setup(
     name="keapi",
     version=VERSION,
     description="A API to communicate with a KEBA PLC via WebSockets",
+    long_description=long_description,
+    long_description_content_type='text/markdown'
     author="Sebastian Redinger",
     author_email="sebastian.redinger@fsbondtec.at",
     license="MIT",
