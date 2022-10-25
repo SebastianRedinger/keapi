@@ -25,7 +25,7 @@ it or monitor the state of it.
 
 ## Getting Started
 ### Installation
-To install this package you can either use `python3 setup.py install` or `pip3 install keapi`
+To install this package you can either use `python3 setup.py install` or `pip3 install keapi-robotics`
 
 ### Usage
 To get startet you first need to connect to the applicalbe web sockets.

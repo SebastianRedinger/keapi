@@ -50,9 +50,20 @@ SubscribeServer
 
 Compatibility Layer
 ===================
+As some functions is not present in RcWebApi beta the compatibility layer
+provides functionality to connect to the TcWebApi to achive those functions.
+This is a temporary fix while RcWebApi is still in beta and will be removed in
+the future.
 
 .. currentmodule:: keapi.compat
 .. autosummary::
     connect_tc_var
     TcVar.set_var
     TcVar.get_var
+    connect_tc_prog
+    TcProg.exec
+    TcProg.start
+    TcProg.stop
+    TcProg.load_project
+    TcProg.unload_project
+    TcProg.is_prog_running
