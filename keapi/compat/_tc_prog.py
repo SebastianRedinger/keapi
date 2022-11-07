@@ -168,7 +168,7 @@ class TcProg:
         if res.status_code != 200:
             raise HttpError(res.text)
         ans = json.loads(res.text)
-        if 'executionTree' not in ans or ans['executionTree']['status']['state'] != 3:
+        if 'executionTree' not in ans or ans['executionTree']['status']['state'] != 1:
             return False
         return True
 
