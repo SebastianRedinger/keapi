@@ -22,7 +22,7 @@ sys.path.append(os.path.abspath('keapi'))
 project = 'KeAPI'
 copyright = '2022, Sebastian Redinger'
 author = 'Sebastian Redinger'
-release = '1.0.0.beta1'
+release = '1.0.0.beta2'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration

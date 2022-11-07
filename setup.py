@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 from pathlib import Path
 
-VERSION = "1.0.0.beta1"
+VERSION = "1.0.0.beta2"
 
 install_requires = ['websocket-client==1.4.1']
 this_directory = Path(__file__).parent
