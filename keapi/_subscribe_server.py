@@ -1,22 +1,22 @@
 from ._error import SocketError
+from ._auth_mgr import AuthMgr
 import json
 import websocket
 from threading import Thread, Lock
 
 
-def connect_subscriber(url: str):
+def connect_subscriber(auth_mgr: AuthMgr):
     """Establishes a connection to the RcWebApi Subscribe
     Socket and returns SubscribeServer object which can
     be used to interact with the socket.
 
-    :param url: Full URL to socket
-        (e.g. ws://IP:PORT/Robot/websocket-subscribe)
-    :type url: str
+    :param auth_mgr: Instance of AuthMgr
+    :type auth_mgr: AuthMgr
     :return: SubscribeServer object
     :rtype: SubscribeServer
     """
     srv = SubscribeServer()
-    srv._connect(url)
+    srv._connect(auth_mgr)
     return srv
 
 
@@ -34,6 +34,7 @@ class SubscribeServer:
         self._is_connected = False
         self._subscription_dict = {}
         self._lock = Lock()
+        self._auth_mgr = None
 
     def disconnect(self):
         """Unsubscribes from all active subscriptions
@@ -115,9 +116,16 @@ class SubscribeServer:
             else:
                 self._subscription_dict[topic].remove(func)
 
-    def _connect(self, url):
+    def _connect(self, auth_mgr):
+        url = (f"ws://{auth_mgr.host_ip()}/api/v4"
+               f"/rc/robots/{auth_mgr.robot_name()}"
+               f"/websocket-subscribe?auth_token={auth_mgr.auth_token()}")
+
+        if auth_mgr.is_client_id_set():
+            url = f"{url}&client_id={auth_mgr.client_id()}"
+
+        self._auth_mgr = auth_mgr
         self._ws = websocket.WebSocketApp(url,
-                                          subprotocols=['RcWebApi.v1.json'],
                                           on_message=self._message_handler,
                                           on_error=self._error_handler,
                                           on_open=self._open_handler)
@@ -128,6 +136,10 @@ class SubscribeServer:
         json_msg = json.loads(message)
         if 'topic' in json_msg:
             topic = json_msg['topic']
+            if topic == 'connection':
+                if not self._auth_mgr.is_client_id_set():
+                    self._auth_mgr.set_client_id(json_msg['data']['greeting']['client_id'])
+                return
             if topic not in self._subscription_dict:
                 return
             with self._lock:

@@ -1,4 +1,5 @@
-from ._error import KebaError, HttpError
+from ._error import KebaError, HttpError, SocketError
+from ._auth_mgr import AuthMgr
 import json
 import websocket
 from enum import Enum
@@ -103,19 +104,18 @@ class Ticket:
             return False
 
 
-def connect_commands(url: str):
+def connect_commands(auth_mgr: AuthMgr):
     """Establishes a connection to the RcWebApi Commands
     Socket and returns CommandServer object which can
     be used to interact with the socket.
 
-    :param url: Full URL to socket
-        (e.g. ws://IP:PORT/Robot/websocket-command)
-    :type url: str
+    :param auth_mgr: Instance of AuthMgr
+    :type auth_mgr: AuthMgr
     :return: CommandServer object
     :rtype: CommandServer
     """
     srv = CommandServer()
-    srv._connect(url)
+    srv._connect(auth_mgr)
     return srv
 
 
@@ -192,15 +192,20 @@ class CommandServer:
         t = self.start(cmd, **kwargs)
         return t.wait()
 
-    def _connect(self, url):
+    def _connect(self, auth_mgr: AuthMgr):
+        url = (f"ws://{auth_mgr.host_ip()}/api/v4"
+               f"/rc/robots/{auth_mgr.robot_name()}"
+               f"/websocket-command?auth_token={auth_mgr.auth_token()}")
+        if auth_mgr.is_client_id_set():
+            url = f"{url}&client_id={auth_mgr.client_id()}"
         self._rec_id_counter = 0
         self._ws = websocket.WebSocket()
-        self._ws.connect(url, subprotocols=['RcWebApi.v1.json'])
+        self._ws.connect(url)
         ret = json.loads(self._ws.recv())
-        if ret['status'] != 200:
-            raise HttpError(
-                'Connection to Keba Socket could not be esablished.'
-                )
+        if ret['data']['status'] != 200:
+            raise SocketError('Connection to Keba Socket could not be esablished.')
+        if not auth_mgr.is_client_id_set():
+            auth_mgr.set_client_id(ret['data']['greeting']['client_id'])
         self._receiver_thread_stop = False
         self._receiver_thread = Thread(target=self._thread_fun)
         self._receiver_thread.start()

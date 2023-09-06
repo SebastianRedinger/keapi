@@ -19,9 +19,8 @@ This interface provides functionality to:
 
 Software Unit Requirements
 """"""""""""""""""""""""""
-| **RobotControl WebAPI 0.2.1-beta.1**
-| **RobotControl API 0.2.1-beta.6**
-| **Communication Utils Robotics 1.5.0** (Optional)
+| **RobotControl WebAPI 1.1.0**
+| **RobotControl API 1.1.0**
 
 
 .. toctree::
